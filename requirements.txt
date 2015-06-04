@@ -1,0 +1,2 @@
+# for heroku just install the production requirements
+-r requirements/prod.txt

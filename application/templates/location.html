@@ -1,0 +1,89 @@
+{% extends "govuk_template.html" %}
+{% block script %}
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+{% endblock %}
+{% block content %}
+
+    <div id="location-content">
+        <div class="grid-row">
+            <div class="column-half">
+              <h3 class="heading-medium">{{location.entry.name}}</h3>
+                    <h4 class="heading-small">Head Teacher</h4>
+                    <p>{{location.entry.headteacher}}</p>
+                    <h4 class="heading-small">Address</h4>
+                    <div class="address" itemscope itemtype="http://schema.org/PostalAddress">
+                        <span>{{address.entry.property}}</span><br/>
+                        <span itemprop="streetAddress">{{address.entry.street}}</span><br/>
+                        {% if address.entry.town %}
+                            <span itemprop="addressLocality">{{address.entry.town}}</span><br/>
+                        {% elif address.entry.locality %}
+                            <span itemprop="addressLocality">{{address.entry.locality}}</span><br/>
+                        {% elif address.entry.area %}
+                            <span itemprop="addressLocality">{{address.entry.area}}</span><br/>
+                        {% endif %}
+                        <span itemprop="postalCode">{{postcode.entry.postcode}}</span><br/>
+                        <span itemprop="addressCountry">{{address.entry['country']}}</span>
+                    </div>
+                    {% if location.entry.telephone %}
+                        <h4 class="heading-small">Telephone</h4>
+                        <p>{{location.entry.telephone}}</p>
+                    {% endif %}
+                    {% if location.entry.website %}
+                    <h4 class="heading-small">This location's website</h4>
+                    <p><a href="{{location.entry.website}}">{{location.entry.website}}</a></p>
+                    {% endif %}
+                    {% if location.entry['religious-character'] %}
+                        <h4 class="heading-small">Religious character</h4>
+                        <p>{{location.entry['religious-character'] }}</p>
+                    {% endif %}
+                    {% if location.entry['minimum-age'] %}
+                        <h4 class="heading-small">Minimum age</h4>
+                        <p>{{location.entry['minimum-age'] }}</p>
+                    {% endif %}
+                    {% if location.entry['maximum-age'] %}
+                        <h4 class="heading-small">Maximum age</h4>
+                        <p>{{location.entry['maximum-age'] }}</p>
+                    {% endif %}
+            </div>
+
+            <div class="column-half">
+              <div id="map-canvas"></div>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <div class="origin-panel">
+                This page uses data from the <a href="{{location_register}}/hash/{{location.hash}}">Made-up Register</a>
+                ,
+                <a href="{{address_register}}/hash/{{address.hash}}">Address Register</a>
+                and
+                <a href="{{postcode_register}}/hash/{{postcode.hash}}">Postcode Register</a>
+            </div>
+        </div>
+    </div>
+<script>
+    var initialize = function () {
+        var mapCanvas = document.getElementById('map-canvas'),
+            coordinates = new google.maps.LatLng({{ address.entry.latitude }}, {{ address.entry.longitude }}),
+            mapOptions = {
+                center: coordinates,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                zoomControl: true,
+                zoomControlOptions: {
+                  style: google.maps.ZoomControlStyle.SMALL
+                }
+            },
+            map = new google.maps.Map(mapCanvas, mapOptions),
+            marker = new google.maps.Marker({
+                position: coordinates,
+                map: map,
+                title: "{{ location.entry.name }}"
+            });
+    };
+
+    $(document).ready(function(){
+        initialize();
+    });
+</script>
+{% endblock %}

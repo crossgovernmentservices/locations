@@ -1,0 +1,15 @@
+{% extends "govuk_template.html" %}
+{% block content %}
+
+  <div class="grid-row">
+     <div class="column-two-thirds search-results">
+        <h3>Results: {{entries | count}}</h3>
+        <ul id="entry-list">
+        {% for entry in entries %}
+          <li><a href='/location/{{entry.entry.school}}'>{{entry.entry.name}}</a></li>
+        {% endfor %}
+        </ul>
+      </div>
+  </div>
+
+{% endblock %}

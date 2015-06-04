@@ -1,0 +1,25 @@
+{% extends "govuk_template.html" %}
+{% block content %}
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">Find a location in England and Wales</h1>
+      </div>
+    </div>
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <div id="search">
+          <p>Search for a location by name or postcode</p>
+          <form action="{{url_for('application.search')}}" method="get">
+              <input class="form-control search"  id="q" name="q" type="text" required>
+              <button class="button">Search</button>
+          </form>
+         </div>
+       </div>
+    </div>
+    <div class="grid-row">
+       <div class="column-two-thirds">
+          <ul id="entry-list">
+          </ul>
+        </div>
+    </div>
+{% endblock %}
