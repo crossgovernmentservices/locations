@@ -5,7 +5,9 @@ from flask import (
     render_template,
     abort,
     request,
-    current_app
+    current_app,
+    make_response,
+    redirect,
 )
 
 from ukpostcodeutils.validation import is_valid_postcode as full
@@ -89,7 +91,14 @@ def asset_path_context_processor():
 
 @application.route('/')
 def index():
-    return render_template('index.html')
+    postback = request.args.get('postback')
+    response = make_response(render_template('index.html'))
+    if postback:
+        response.set_cookie('postback', postback)
+    else:
+        response.set_cookie('postback')
+
+    return response
 
 
 @application.route('/search')
@@ -130,13 +139,23 @@ def location(id):
             location_register = current_app.config['SCHOOL_REGISTER']
             postcode_register = current_app.config['POSTCODE_REGISTER']
             #posttown_register = current_app.config['POSTTOWN_REGISTER']
+            postback = request.cookies.get('postback')
             return render_template('location.html', location=location, address=address,
                                    postcode=postcode,
                                    location_register=location_register,
                                    address_register=address_register,
-                                   postcode_register=postcode_register)
+                                   postcode_register=postcode_register,
+                                   postback=postback,
+                                   id=id)
         else:
             abort(404)
     except Exception as e:
         log_traceback(current_app.logger, e)
         return abort(res.status_code)
+
+@application.route('/postback/<id>')
+def postback(id):
+    postback = request.cookies.get('postback')
+    response = redirect('%s/%s' % (postback, id))
+    response.set_cookie('postback')
+    return response

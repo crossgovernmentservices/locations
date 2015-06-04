@@ -47,6 +47,9 @@
             </div>
 
             <div class="column-half">
+              {% if postback %}
+              <a class="button button-get-started" href="/postback/{{ id }}">This is my location</a>
+              {% endif %}
               <div id="map-canvas"></div>
             </div>
         </div>
