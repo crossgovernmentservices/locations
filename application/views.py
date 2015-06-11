@@ -8,6 +8,7 @@ from flask import (
     current_app,
     make_response,
     redirect,
+    jsonify,
 )
 
 from ukpostcodeutils.validation import is_valid_postcode as full
@@ -100,6 +101,10 @@ def index():
 
     return response
 
+@application.route('/health')
+def health():
+    # TODO ping other registers
+    return jsonify({'msg': 'success', 'status_code': 200}), 200
 
 @application.route('/search')
 def search():
