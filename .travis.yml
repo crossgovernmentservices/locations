@@ -1,0 +1,10 @@
+language: python
+python:
+- '3.3'
+install: pip install -r requirements/dev.txt
+script: py.test tests
+deploy:
+  provider: heroku
+  app: x-gov-services-locations
+  api_key:
+    secure: KlhDDgvEE2Dq9a1rANe4wgnBOL4H0IsXrzvA81J+/anTlRzU0t5Jol+Gg9luUrxnMObxmkHMuMK6/iBuB9jh2K6+nUsvuuWn4BL0NDm5CriUQ4w4IPoGgsFfGbWA4iHiKo6/w4muKJXykWLdZXI/OnZNF5N3t++n9Kk4dJctvPyHBnRwleMySk9NozJI8BDYwN48f6bBYMmZ+VoaK4pUf0YpcOf13w54HzD6zmvjiJYsVTRjTDWSzjEDgImQ3LBJf9pwK+PNovebmkw+kwJFolkyl2E7CoJU6fWjSd5C9sFJTeYeGFOkJko+GtJ83nQ53xrRK6/Io4SacLZR+dKrdkiqCSaeqxHXE1++kqNrZHtksx8rB2F56WP2mWZutAhmlRKdvr5Ke02qk3MkXIIhFPKgQRMm11SC0jDZ8b3djU9zIp78u50sId2yNt+T4YJCH6euccOTKRH+cWvwTzF/uuziiPiELX7j3/TZuJzI4vZ+3wKEe3zrU5AtkJOHX/txkGL48OtOp9uC+8UVBasQYFrLMWbPJJHA3un8r8eRzhyhzGIRPrJpU4VOnYZFlecMi9e3aDLTc5jkYuL5U7Oh/J8YCTy2zH2m3KaWyMs8+EvuqGWyiEUjLcfKofCgyopBwnrUg1JROX3NMMYPeUYDbQyarMtLGAUWAAv5mEp8BOk=
